@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path'),
 mongoose = require('mongoose');
 
+const bcrypt = require('bcryptjs');
+
 const User = require('../models/user');
 
 const router = express.Router();
@@ -13,8 +15,13 @@ router.post('/signup', (req, res, next) => {
         if(result){
             res.render('signup.ejs');
         }else{
-            User.create({email:req.body.Email, password:req.body.password, name:req.body.Name});
-            res.render('login.ejs');
+            bcrypt.hash(req.body.password, 10).then((result) => {
+                User.create({email:req.body.Email, password:result, name:req.body.Name});
+                res.render('login.ejs');
+            }).catch(err => {
+                console.log(err);
+            })
+           
         }
     }).catch(err => {
         console.log(err);
@@ -22,19 +29,26 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.findOne({email:req.body.Email, password:req.body.password}).then(result => {
-        if(result){
-            res.send('<h1>Hi, Welcome to this page, you successfully logged in</h1>');
-        }else{
-            res.redirect('/login');
-        }
-    }).catch(err => {
-        console.log(err);
-    })
+        User.findOne({email:req.body.Email}).then(response => {
+            bcrypt.compare(req.body.password, response.password).then(result => {
+                if(result){
+                         res.send('<h1>Hi, Welcome to this page, you successfully logged in</h1>');
+                }
+                else{
+                    res.render('login');
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+            }).catch(err => {
+            console.log(err);
+        })
+       
+    
 });
 
 router.get('/signup', (req,res, next) => {
-    res.render('signup');
+    res.render('signup.ejs');
 });
 
 router.get('/login', (req,res,next) => {
