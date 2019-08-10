@@ -1,7 +1,6 @@
 const express=require('express'),
 bodyParser=require('body-parser'),
 mongoose=require('mongoose'),
-crypto=require('crypto'),
 app=express();
 
 const userRoutes = require('./routes/user');
