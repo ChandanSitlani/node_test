@@ -21,4 +21,10 @@ mongoose.connect('mongodb+srv://sarthak3661:BTQkfbCCqOG7Y5oU@cluster0-kow5n.mong
 }).catch(err => {
 	console.log(err);
 })
+app.get('/',function(req,res){
+	if(!req.user)
+	res.render('login');
+/*else
+	res.render('dashboard');*/
+});
 
