@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        #Signup{
+        #login{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -29,12 +29,8 @@
     </style>
 </head>
 <body>
-    <h2>SignUp</h2>
-    <form method="POST" id="Signup" action="/signup">
-        <div class="inputs">
-                <label for="text">Enter Name</label>
-                <input type="text" name="Name" id="name" placeholder="Enter Name">
-        </div>
+    <h2>Login</h2>
+    <form method="POST" id="login" action="/login">
         <div class="inputs">
                 <label for="email">Enter Email</label>
                 <input type="email" name="Email" id="email" placeholder="Enter Email" required>
@@ -43,25 +39,11 @@
                 <label for="password">Enter password</label>
                 <input type="password" name="password" id="password" placeholder="Enter password" required>
         </div>
-        <div class="inputs">
-                <label for="password">Confirm password</label>
-                <input type="password" placeholder="Confirm password" onkeyup="update(event)" required>
-        </div>
-            <button type="Submit" id="Submit">Submit</button>
-    </form>
-    <script>
-        let button = document.querySelector('#Submit');
-        button.disabled = true;
-        function update(e){
-            let input = document.querySelector('#password').value;
-            if(e.target.value !== input){
-                e.target.style.background = "yellow";
-            }else{
-                e.target.style.background = "lightgreen";
-                button.disabled = false;
-            }
-        }
 
-    </script>
+        <div class="inputs">
+           <button type="Submit">Login</button>
+    </div>
+        
+    </form>
 </body>
 </html>
